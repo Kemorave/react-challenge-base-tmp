@@ -2,13 +2,13 @@
   "name": "rest-countries-api-with-color-theme-switcher",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://kemorave.github.io/rest-countries-api-with-color-theme-switcher",
+  "homepage": "https://kemorave.github.io/me",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build ",
     "deploy": "gh-pages -d dist",
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "vite", 
+    "build": "tsc && vite build --base=./",
     "preview": "vite preview"
   },
   "dependencies": {
