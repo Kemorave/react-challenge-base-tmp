@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import {BrowserRouter} from 'react-router-dom';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
    <Provider store={store}>
-    <BrowserRouter basename='rest-countries-api-with-color-theme-switcher'>
+    <BrowserRouter basename='/'>
     <App />
     </BrowserRouter>
   </Provider>,
