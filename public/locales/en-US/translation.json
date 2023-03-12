@@ -1,0 +1,4 @@
+{
+  "welcome": "hello world",
+  "dateNow":"Today date is {{date, DATE_HUGE}}"
+}

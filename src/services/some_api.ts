@@ -6,10 +6,11 @@ import type { SomethingResponce } from '../types/somthing'
 export const someApi = createApi({
   reducerPath: 'someApi',
   // global configuration for the api
-  keepUnusedDataFor: 60*60,
+  //keepUnusedDataFor: 60*60,
   baseQuery: fetchBaseQuery({ baseUrl: 'https://geo.ipify.org/api/v2' }),
   endpoints: (builder) => ({
     getSomethingResponce: builder.query<SomethingResponce, string>({
+      keepUnusedDataFor: 60*60,
       query: (ip) => `country,city?apiKey=at_hyXYL3kaPGHjV5y8i2o1Wbm7GNiAl${ip&&(ip.search(RegExp('[a-z]'))?`&ipAddress=${ip}`:`&domain=${ip}`)}`,
     }),
   }),

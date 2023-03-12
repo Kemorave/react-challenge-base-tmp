@@ -1,0 +1,4 @@
+{
+  "welcome": "مرحبا للعالم",
+  "dateNow":"التاريخ الان {{date, DATE_HUGE}}"
+}
