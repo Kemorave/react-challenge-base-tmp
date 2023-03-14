@@ -1,1 +1,0 @@
-export const {} = import.meta.env.SSR

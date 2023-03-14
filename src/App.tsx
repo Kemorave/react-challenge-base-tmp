@@ -3,14 +3,14 @@ import "./App.css";
 import { useTranslation, Trans } from "react-i18next";
 import { ThemeContext, ThemeType } from "./context/theme.context";
 import ThemeToggle from "./containers/themeToggle";
+import { Outlet } from "react-router-dom";
+import Nav from "./containers/nav";
+import { User } from "./types/user";
+import Footer from "./containers/footer";
 
-const lngs = {
-  en: { nativeName: "English" },
-  ar: { nativeName: "العربية" },
-};
-function App() {
+
+function App(props:{user:User|null}) {
   const [theme, setTheme] = useState(ThemeType.dark);
-  const { t, i18n } = useTranslation();
   return (
     <div className={` ${theme}`}>
       <ThemeContext.Provider
@@ -24,39 +24,13 @@ function App() {
           },
         }}
       >
-        <div className={`h-[100vh] flex ${theme}`}>
-          <div
-            className=" m-auto 
-      flex rounded-lg p-10 flex-col"
-          >
-            <h1 className="text-center my-3 uppercase    font-bold ">
-              env ==={" "}
-              <span className="animate-pulse">
-                {import.meta.env.VITE_APP_TITLE}
-              </span>
-            </h1>
-            <p className=" text-center">
-              <Trans i18nKey="welcome"></Trans>
-              <br />
-              <Trans values={{ date: new Date() }} i18nKey="dateNow"></Trans>
-            </p>
+        <div className={`h-[100vh] flex flex-col ${theme}`}>
+          <Nav user={props.user} />
 
-            <ThemeToggle />
-            <div className="    self-center">
-              {Object.keys(lngs).map((lng, i) => (
-                <button
-                  key={lng}
-                  style={{
-                    fontWeight:
-                      i18n.resolvedLanguage === lng ? "bold" : "normal",
-                  }}
-                  onClick={async () => await i18n.changeLanguage(lng)}
-                >
-                  {(lngs as any)[lng].nativeName}
-                </button>
-              ))}
-            </div>
+          <div className="h-full ">
+            <Outlet />
           </div>
+          <Footer user={props.user} />
         </div>
       </ThemeContext.Provider>
     </div>
