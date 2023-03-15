@@ -20,8 +20,9 @@ const supportedLanguages: LanguageInfo[] = [
 ];
 function Index() {
   const { t, i18n } = useTranslation();
-  const token = useSelector(authSelector).tokenData;
-  const user = useSelector(authSelector).user;
+  const auth = useSelector(authSelector);
+  const token = auth.tokenData;
+  const user = auth.user;
   const dispatch = useDispatch();
 
   const [loadUser, { data, isLoading, isFetching }] =
