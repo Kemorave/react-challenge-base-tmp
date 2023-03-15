@@ -42,9 +42,9 @@ function Index() {
           await i18n.changeLanguage(lan);
         },
         currentLanguage: i18n.language,
-        i18n: i18n,
-        t: t,
-        supportedLangauges: supportedLanguages,
+        i18n,
+        t,
+        supportedLanguages,
       }}
     >
       <RouterProvider router={router} />

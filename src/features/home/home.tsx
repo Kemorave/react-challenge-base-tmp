@@ -5,8 +5,8 @@ import { LanguageContext } from "../../context/language.context";
 import i18n from "../../locale/i18n";
 
 const Home = () => {
-    const language = useContext(LanguageContext);
- 
+  const language = useContext(LanguageContext);
+
   return (
     <section className="h-full flex ">
       <div
@@ -21,7 +21,7 @@ const Home = () => {
 
         <ThemeToggle />
         <div className=" self-center">
-          {language.supportedLangauges?.map((lng, i) => (
+          {language.supportedLanguages?.map((lng, i) => (
             <button
               key={lng.code}
               style={{

@@ -7,7 +7,7 @@ export interface LanguageInfo {
 }
 export interface LanguageData {
   currentLanguage: string;
-  supportedLangauges?: LanguageInfo[];
+  supportedLanguages?: LanguageInfo[];
   changeLanguage: (lang: string) => Promise<void>;
   t: TFunction<"Translation", undefined, "Translation">;
   i18n: i18n;
