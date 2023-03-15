@@ -8,11 +8,13 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, RouterProvider } from "react-router-dom";
 import { getRouter } from "./router";
 import SplashScreen from "./components/splashScreen";
-import { authSelector } from "./features/auth/auth.slice";
+import { authSelector, logOut } from "./features/auth/auth.slice";
 import { useLazyGetCurrentUserQuery } from "./services/api.service";
 import { updateUser } from "./features/auth/auth.slice";
 import { useTranslation } from "react-i18next";
 import { LanguageContext, LanguageInfo } from "./context/language.context";
+import { isNetworkError } from "./util/fetchErrorUtil";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
 const supportedLanguages: LanguageInfo[] = [
   { nativeName: "English", code: "en" },
@@ -22,13 +24,19 @@ function Index() {
   const { t, i18n } = useTranslation();
   const auth = useSelector(authSelector);
   const dispatch = useDispatch();
-  const [loadUser, { data, isLoading, isFetching }] =
+  const [loadUser, { data, isLoading, isError, error, isFetching }] =
     useLazyGetCurrentUserQuery();
   useEffect(() => {
-    if (!(isLoading && isFetching)) loadUser(undefined, false);
-    if (data) dispatch(updateUser(data));
     console.log(data);
-  }, [data]);
+    console.log(auth.tokenData);
+    if (isError && !isNetworkError(error as FetchBaseQueryError)) {
+      dispatch(logOut());
+      return;
+    }
+    if (!(isLoading && isFetching) && auth.tokenData)
+      loadUser(undefined, false);
+    if (data) dispatch(updateUser(data));
+  }, [data, error]);
 
   const token = auth.tokenData;
   const user = auth.user;

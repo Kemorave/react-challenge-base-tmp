@@ -34,6 +34,7 @@ const authSlice = createSlice({
         state.errorKey = "NetworkError";
         return;
       } else if (error.status) {
+        console.l
         state.errorKey = "UnkownError";
         return;
       }

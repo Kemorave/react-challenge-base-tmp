@@ -2,6 +2,8 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import React, { useEffect } from "react";
 import { FieldValues, useForm, useFormContext } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { Constants } from "../../app/config/constants";
 import Spinner from "../../components/spinner";
 import SpinnerButton from "../../components/spinnerButton";
 import { useLoginMutation } from "../../services/api.service";
@@ -16,7 +18,9 @@ function Error(props: { msg: string }) {
 }
 function Login() {
   const auth = useSelector(authSelector);
-
+if (auth.user) {
+  return <Navigate replace to={Constants.profile}/>
+}
   const [login, { isLoading, data, error, isError, isSuccess }] =
     useLoginMutation();
   const {
