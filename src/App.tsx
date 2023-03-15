@@ -8,11 +8,10 @@ import Nav from "./containers/nav";
 import { User } from "./types/user";
 import Footer from "./containers/footer";
 
-
-function App(props:{user:User|null}) {
-  const [theme, setTheme] = useState(ThemeType.dark);
+function App(props: { user: User | null }) {
+  const [theme, setTheme] = useState(ThemeType.light);
   return (
-    <div className={` ${theme}`}>
+    <div className={`${theme}`}>
       <ThemeContext.Provider
         value={{
           theme: theme,

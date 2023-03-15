@@ -20,3 +20,7 @@ input[type=email], input[type=password]{
     border-gray-200 rounded-md dark:rounded-md  px-2 py-1 
     bg-white dark:bg-black text-black dark:text-white;
 }
+
+.nav-link{
+  @apply underline  text-black dark:text-white;
+}
