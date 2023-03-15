@@ -18,9 +18,7 @@ function Error(props: { msg: string }) {
 }
 function Login() {
   const auth = useSelector(authSelector);
-if (auth.user) {
-  return <Navigate replace to={Constants.profile}/>
-}
+
   const [login, { isLoading, data, error, isError, isSuccess }] =
     useLoginMutation();
   const {
@@ -32,7 +30,7 @@ if (auth.user) {
   useEffect(() => {
     if (error) {
       dispatch(logIn(error as FetchBaseQueryError));
-    }else if(data){
+    } else if (data) {
       dispatch(logIn(data as AuthResult));
     }
   }, [error, data]);
@@ -40,7 +38,9 @@ if (auth.user) {
     console.log(e);
     login({ email: e["email"], password: e["password"] });
   };
-
+  if (auth.user) {
+    return <Navigate replace to={Constants.profile} />;
+  }
   return (
     <div className="h-full flex flex-col  items-center">
       <form
