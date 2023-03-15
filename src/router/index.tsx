@@ -1,11 +1,12 @@
 import { Root } from "postcss";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { Trans } from "react-i18next";
 import { Provider } from "react-redux";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
+  useOutlet,
 } from "react-router-dom";
 import App from "../App";
 import { Constants } from "../app/config/constants";
@@ -25,11 +26,18 @@ export function getRouter(user: User | null) {
     createRoutesFromElements(
       <Route path={Constants.home} element={<App user={user} />}>
         <Route index element={<Home />} />
-        <Route path={Constants.login} element={<Login />} />
+        <Route
+          path={Constants.login}
+          element={
+            <ProtectedRoute case="loggedIn" turnPath={Constants.profile}>
+              <Login />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path={Constants.profile}
           element={
-            <ProtectedRoute user={user}>
+            <ProtectedRoute case="loggedOut" turnPath={Constants.login}>
               <ProfilePage />
             </ProtectedRoute>
           }

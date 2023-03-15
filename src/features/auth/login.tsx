@@ -2,7 +2,6 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import React, { useEffect } from "react";
 import { FieldValues, useForm, useFormContext } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { Constants } from "../../app/config/constants";
 import Spinner from "../../components/spinner";
 import SpinnerButton from "../../components/spinnerButton";
@@ -18,7 +17,6 @@ function Error(props: { msg: string }) {
 }
 function Login() {
   const auth = useSelector(authSelector);
-
   const [login, { isLoading, data, error, isError, isSuccess }] =
     useLoginMutation();
   const {
@@ -38,9 +36,7 @@ function Login() {
     console.log(e);
     login({ email: e["email"], password: e["password"] });
   };
-  if (auth.user) {
-    return <Navigate replace to={Constants.profile} />;
-  }
+
   return (
     <div className="h-full flex flex-col  items-center">
       <form

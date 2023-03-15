@@ -5,7 +5,7 @@ import "./index.css";
 import "./locale/i18n";
 import { store } from "./app/store";
 import { Provider, useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { getRouter } from "./router";
 import SplashScreen from "./components/splashScreen";
 import { authSelector, logOut } from "./features/auth/auth.slice";

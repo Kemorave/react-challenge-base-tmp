@@ -7,15 +7,33 @@ import { Constants } from "../app/config/constants";
 const Nav = memo((props: { user: User | null }) => {
   return (
     <div className="flex px-5 items-center justify-between">
-      <h1 className="text-center my-3 uppercase    font-bold ">
-        env ==={" "}
-        <span className="animate-pulse">{import.meta.env.VITE_APP_TITLE}</span>
-      </h1>
+      <NavLink to={Constants.home}>
+        <h1 className="text-center my-3 uppercase    font-bold ">
+          env ==={" "}
+          <span className="animate-pulse">
+            {import.meta.env.VITE_APP_TITLE}
+          </span>
+        </h1>
+      </NavLink>
       <div className="flex items-center ">
         {props.user ? (
-          <p>{props.user.name}</p>
+          <NavLink
+            className={(isActive) =>
+              isActive.isActive ? "hidden" : "block nav-link"
+            }
+            to={Constants.profile}
+          >
+            {props.user.name}
+          </NavLink>
         ) : (
-          <NavLink  className={(isActive)=>isActive.isActive?'hidden': 'block nav-link'} to={Constants.login}>Login</NavLink>
+          <NavLink
+            className={(isActive) =>
+              isActive.isActive ? "hidden" : "block nav-link"
+            }
+            to={Constants.login}
+          >
+            Login
+          </NavLink>
         )}
         <ThemeToggle />
       </div>

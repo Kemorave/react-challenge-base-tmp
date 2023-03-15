@@ -24,3 +24,6 @@ input[type=email], input[type=password]{
 .nav-link{
   @apply underline  text-black dark:text-white;
 }
+html{
+  @apply overflow-hidden
+}
