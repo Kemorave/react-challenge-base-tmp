@@ -6,7 +6,7 @@ const ThemeToggle = memo(() => {
   return (
     <button
       className="justify-self-center
-       m-2 mx-auto self-center transition-all
+       self-center transition-all
         text-white bg-black 
         dark:bg-white dark:text-black
         active:bg-red-800

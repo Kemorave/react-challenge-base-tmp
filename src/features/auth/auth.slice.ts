@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { RootState } from "../../app/store";
 import { authService } from "../../services/auth.service";
 import { AuthResult, JWTData } from "../../types/auth";
 import { User } from "../../types/user";
+import { isNetworkError } from "../../util/fetchErrorUtil";
 
 export interface AuthState {
   user?: User | null;
@@ -22,14 +24,25 @@ const authSlice = createSlice({
       state.tokenData = null;
       state.user = null;
     },
-    logIn: (state, action: PayloadAction<AuthResult>) => {
-      let authD = action.payload;
+    logIn: (state, action: PayloadAction<AuthResult | FetchBaseQueryError>) => {
+      let authD = action.payload as AuthResult;
+      let error = action.payload as FetchBaseQueryError;
+      if (typeof error?.status === "number") {
+        state.errorKey = getErrorKey(error.status as number);
+        return;
+      } else if (isNetworkError(error)) {
+        state.errorKey = "NetworkError";
+        return;
+      } else if (error.status) {
+        state.errorKey = "UnkownError";
+        return;
+      }
       if (authD.code != 200) {
         state.errorKey = getErrorKey(authD.code);
         return;
       }
       state.errorKey = null;
-      state.user = action.payload.user;
+      state.user = authD.user;
       authService.saveJWTData({
         refreshToken: authD.refreshToken,
         token: authD.token,
@@ -58,6 +71,6 @@ function getErrorKey(code: number): string {
   }
 }
 
-export const { logIn, logOut, updateUser,refreshToken } = authSlice.actions;
+export const { logIn, logOut, updateUser, refreshToken } = authSlice.actions;
 
 export default authSlice.reducer;
