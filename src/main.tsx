@@ -21,20 +21,21 @@ const supportedLanguages: LanguageInfo[] = [
 function Index() {
   const { t, i18n } = useTranslation();
   const auth = useSelector(authSelector);
-  const token = auth.tokenData;
-  const user = auth.user;
   const dispatch = useDispatch();
-
   const [loadUser, { data, isLoading, isFetching }] =
     useLazyGetCurrentUserQuery();
+  useEffect(() => {
+    if (data) dispatch(updateUser(data));
+  }, [data]);
+
+  const token = auth.tokenData;
+  const user = auth.user;
 
   if ((!user && token) || isLoading || isFetching) {
     if (!(isLoading && isFetching)) loadUser(undefined, false);
     return <SplashScreen />;
   }
-  useEffect(() => {
-    if (data) dispatch(updateUser(data));
-  }, [data]);
+
   const router = getRouter(user ?? null);
   return (
     <LanguageContext.Provider
