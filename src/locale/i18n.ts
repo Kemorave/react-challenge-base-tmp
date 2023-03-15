@@ -8,7 +8,15 @@ i18n
   // i18next-http-backend
   // loads translations from your server
   // https://github.com/i18next/i18next-http-backend
-  .use(Backend)
+  .use(
+    new Backend(null, {
+      loadPath: (lng, n) =>
+        import.meta.env.VITE_BASE_URL +
+        "\\locales\\" +
+        lng +
+        "\\translation.json",
+    })
+  )
   // detect user language
   // learn more: https://github.com/i18next/i18next-browser-languageDetector
   .use(LanguageDetector)

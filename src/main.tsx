@@ -41,7 +41,9 @@ function Index() {
         changeLanguage: async (lan) => {
           await i18n.changeLanguage(lan);
         },
-        currentLanguage: i18n.language,i18n:i18n,t:t,
+        currentLanguage: i18n.language,
+        i18n: i18n,
+        t: t,
         supportedLangauges: supportedLanguages,
       }}
     >
