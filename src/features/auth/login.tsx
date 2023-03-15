@@ -1,10 +1,11 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import React from "react";
+import React, { useEffect } from "react";
 import { FieldValues, useForm, useFormContext } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../components/spinner";
 import SpinnerButton from "../../components/spinnerButton";
 import { useLoginMutation } from "../../services/api.service";
+import { AuthResult } from "../../types/auth";
 import { authSelector, logIn } from "./auth.slice";
 function Error(props: { msg: string }) {
   return (
@@ -23,13 +24,19 @@ function Login() {
     register,
     formState: { errors },
   } = useForm({ mode: "onSubmit" });
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (error) {
+      dispatch(logIn(error as FetchBaseQueryError));
+    }else if(data){
+      dispatch(logIn(data as AuthResult));
+    }
+  }, [error, data]);
   const onSubmit = (e: FieldValues) => {
     console.log(e);
     login({ email: e["email"], password: e["password"] });
   };
-  if (error) {
-    useDispatch()(logIn(error as FetchBaseQueryError));
-  }
+
   return (
     <div className="h-full flex flex-col  items-center">
       <form
@@ -42,7 +49,7 @@ function Login() {
             bit
           </span>
         </h1>
-        {auth.errorKey && <Error msg={ auth.errorKey} />}
+        {auth.errorKey && <Error msg={auth.errorKey} />}
         <input
           id="email"
           placeholder="Email"
@@ -58,7 +65,7 @@ function Login() {
           placeholder="Password"
           type={"password"}
           {...register("password", {
-            minLength: 8,
+            minLength: 3,
             required: true,
           })}
         />
@@ -66,7 +73,7 @@ function Login() {
           <Error
             msg={
               errors.password.type == "minLength"
-                ? "Password must be 8 characters or longer"
+                ? "Password must be 3 characters or longer"
                 : "Password requried"
             }
           />

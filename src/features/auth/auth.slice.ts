@@ -41,6 +41,7 @@ const authSlice = createSlice({
         state.errorKey = getErrorKey(authD.code);
         return;
       }
+      console.log(authD);;
       state.errorKey = null;
       state.user = authD.user;
       authService.saveJWTData({

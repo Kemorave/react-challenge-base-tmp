@@ -25,14 +25,15 @@ function Index() {
   const [loadUser, { data, isLoading, isFetching }] =
     useLazyGetCurrentUserQuery();
   useEffect(() => {
+    if (!(isLoading && isFetching)) loadUser(undefined, false);
     if (data) dispatch(updateUser(data));
+    console.log(data);
   }, [data]);
 
   const token = auth.tokenData;
   const user = auth.user;
 
   if ((!user && token) || isLoading || isFetching) {
-    if (!(isLoading && isFetching)) loadUser(undefined, false);
     return <SplashScreen />;
   }
 

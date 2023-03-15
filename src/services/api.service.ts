@@ -76,17 +76,26 @@ export const mainApi = createApi({
   endpoints: (builder) => ({
     getCurrentUser: builder.query<User, undefined>({
       //keepUnusedDataFor: 60 * 60,
-      query: () => `user/me`,
+      query: () => `Users/me`,
     }),
     login: builder.mutation<AuthResult, LoginRequest>({
-      query: (body) => ({ method: "POST", url: "auth/login", body }),
+      query: (body) => ({
+        method: "POST",
+        url: "Users/auth/login",
+        body: loginToFormData(body),
+      }),
     }),
     register: builder.mutation<AuthResult, RegistrationRequest>({
       query: (body) => ({ method: "POST", url: "auth/register", body }),
     }),
   }),
 });
-
+function loginToFormData(lr:LoginRequest){
+var fd= new FormData();
+fd.append('Email',lr.email);
+fd.append('Password',lr.password);
+return fd;
+}
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
