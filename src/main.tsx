@@ -90,7 +90,7 @@ function Index() {
         supportedLanguages,
       }}
     >
-      <RouterProvider router={router} />
+      <RouterProvider router={router} fallbackElement={<SplashScreen />} />
     </LanguageContext.Provider>
   );
 }
