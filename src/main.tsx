@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { LanguageContext, LanguageInfo } from "./context/language.context";
 import { isNetworkError } from "./util/fetchErrorUtil";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { AiFillAlert } from "react-icons/ai";
 
 const supportedLanguages: LanguageInfo[] = [
   { nativeName: "English", code: "en" },
@@ -27,20 +28,51 @@ function Index() {
   const [loadUser, { data, isLoading, isError, error, isFetching }] =
     useLazyGetCurrentUserQuery();
   useEffect(() => {
-    console.log(data);
+    console.log(error);
     console.log(auth.tokenData);
     if (isError && !isNetworkError(error as FetchBaseQueryError)) {
       dispatch(logOut());
       return;
     }
-    if (!(isLoading && isFetching) && auth.tokenData)
+    if (!(isLoading && isFetching) && !isError && auth.tokenData)
       loadUser(undefined, false);
     if (data) dispatch(updateUser(data));
   }, [data, error]);
 
   const token = auth.tokenData;
   const user = auth.user;
+  if (isError) {
+    return (
+      <div className="h-[100vh] w-full flex">
+        <div className="m-auto flex rounded-2xl flex-col p-5 border-2 border-gray-600">
+          <AiFillAlert className="inline mb-5 h-10 w-10" />
 
+          <p>Something wrong happened </p>
+          <p className="font-thin underline my-2 bg-gray-100 px-5 py-1">
+            {` ${(error as FetchBaseQueryError).status} `}
+          </p>
+          <p className="max-w-[200px] text-sm">
+            We are having trouble reaching our server please try again later or
+            logout if this continues
+          </p>
+          <div className="flex gap-5 self-center">
+            <button
+              className="m-auto mt-10"
+              onClick={() => loadUser(undefined, false)}
+            >
+              Retry
+            </button>
+            <button
+              className="m-auto mt-10 bg-red-300"
+              onClick={() => dispatch(logOut())}
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if ((!user && token) || isLoading || isFetching) {
     return <SplashScreen />;
   }

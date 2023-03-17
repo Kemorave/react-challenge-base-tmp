@@ -1,23 +1,28 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import React, { useEffect } from "react";
 import { FieldValues, useForm, useFormContext } from "react-hook-form";
+import { FaSmileWink } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Constants } from "../../app/config/constants";
+import { Error } from "../../components/Error";
 import Spinner from "../../components/spinner";
 import SpinnerButton from "../../components/spinnerButton";
-import { useLoginMutation } from "../../services/api.service";
+import {
+  useLoginMutation,
+  useRegisterMutation,
+} from "../../services/api.service";
 import { AuthResult } from "../../types/auth";
 import { authSelector, logIn } from "./auth.slice";
-import { Error } from "../../components/Error";
-function Login() {
+
+const Register = () => {
   const auth = useSelector(authSelector);
-  const [login, { isLoading, data, error, isError, isSuccess }] =
-    useLoginMutation();
+  const [registerUser, { isLoading, data, error, isError, isSuccess }] =
+    useRegisterMutation();
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({ mode: "onSubmit" });
+  } = useForm({ mode: "onChange" });
   const dispatch = useDispatch();
   useEffect(() => {
     if (error) {
@@ -28,7 +33,14 @@ function Login() {
   }, [error, data]);
   const onSubmit = (e: FieldValues) => {
     console.log(e);
-    login({ email: e["email"], password: e["password"] });
+    registerUser({
+      email: e["email"],
+      password: e["password"],
+      role: "",
+      passwordConfirm: e["rePassword"],
+      id: 0,
+      name: e["name"],
+    });
   };
 
   return (
@@ -38,10 +50,8 @@ function Login() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className="mb-5 text-2xl">
-          Welcome <span className="underline">back</span> to the{" "}
-          <span className="animate-pulse font-semibold shadow-inner dark:shadow-md text-gray-500 px-1 rounded-sm shadow-red-900 dark:shadow-white">
-            bit
-          </span>
+          Wana take a look <span className="text-red-500">inside</span> ?{"  "}
+          <FaSmileWink className="animate-bounce inline " />
         </h1>
         {auth.errorKey && <Error msg={auth.errorKey} />}
         <input
@@ -72,16 +82,37 @@ function Login() {
             }
           />
         )}
-
+        <input
+          id="rePassword"
+          placeholder="repeat Password"
+          type={"password"}
+          {...register("rePassword", {
+            required: true,
+            validate: (value, form) => {
+              console.log(value);
+              if (value != form["password"]) {
+                return "Not match";
+              }
+              return;
+            },
+          })}
+        />
+        {errors.rePassword && (
+          <Error
+            msg={
+              ( errors.rePassword.message?.toString()) ?? "Required"
+            }
+          />
+        )}
         <SpinnerButton
           type="submit"
           className="ml-0 mr-auto"
-          lable="Login"
+          lable="Register"
           isBusy={isLoading}
         />
       </form>
     </div>
   );
-}
+};
 
-export default Login;
+export default Register;

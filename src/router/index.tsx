@@ -15,6 +15,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import SplashScreen from "../components/splashScreen";
 import ThemeToggle from "../containers/themeToggle";
 import Login from "../features/auth/login";
+import Register from "../features/auth/register";
 import Home from "../features/home/home";
 import ProfilePage from "../features/profile/profilePage";
 import NotFoundPage from "../pages/notFoundPage";
@@ -31,6 +32,14 @@ export function getRouter(user: User | null) {
           element={
             <ProtectedRoute case="loggedIn" turnPath={Constants.profile}>
               <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={Constants.register}
+          element={
+            <ProtectedRoute case="loggedIn" turnPath={Constants.profile}>
+              <Register />
             </ProtectedRoute>
           }
         />
