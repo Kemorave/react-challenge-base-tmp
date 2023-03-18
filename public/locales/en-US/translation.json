@@ -17,5 +17,6 @@
   "DarkTheme.Catch": "Make it Dark",
   "Password": "Password",
   "Email": "Email",
-  "RePassword": "Re-enter Password"
+  "RePassword": "Re-enter Password",
+  "UnkownError": "Server not reachable"
 }

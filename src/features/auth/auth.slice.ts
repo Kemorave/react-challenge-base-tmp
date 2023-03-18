@@ -33,7 +33,7 @@ const authSlice = createSlice({
       } else if (isNetworkError(error)) {
         state.errorKey = "NetworkError";
         return;
-      } else if (error.status) { 
+      } else if (error.status) {
         state.errorKey = "UnkownError";
         return;
       }
@@ -64,11 +64,11 @@ export const authSelector = (state: RootState) => state.auth;
 function getErrorKey(code: number): string {
   switch (code) {
     case 422:
-      return "wrongPassword";
+      return "WrongPassword";
     case 404:
-      return "accountNotFound";
+      return "AccountNotFound";
     default:
-      return "unkownError";
+      return "UnkownError";
   }
 }
 

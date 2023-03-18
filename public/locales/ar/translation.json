@@ -17,5 +17,6 @@
   "DarkTheme.Catch": "سودها",
   "Password": "كلمة السر",
   "Email": "ايميل",
-  "RePassword": "اعادة كلمة السر"
+  "RePassword": "اعادة كلمة السر",
+  "UnkownError": "خطا تواصل مع المخدم"
 }

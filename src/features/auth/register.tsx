@@ -53,9 +53,9 @@ const Register = () => {
           Wana take a look <span className="text-red-500">inside</span> ?{"  "}
           <FaSmileWink className="animate-bounce inline " />
         </h1>
-        {auth.errorKey && <Error msg={auth.errorKey} />}
         <input
-          id="email" type={'email'}
+          id="email"
+          type={"email"}
           placeholder={language.t("Email")}
           {...register("email")}
         />
