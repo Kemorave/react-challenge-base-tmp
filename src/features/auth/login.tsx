@@ -7,15 +7,19 @@ import { useLoginMutation } from "../../services/api.service";
 import { AuthResult } from "../../types/auth";
 import { authSelector, logIn } from "./auth.slice";
 import { Error } from "../../components/Error";
+import { LoginValidationSchema } from "./validation";
+import { yupResolver } from "@hookform/resolvers/yup";
 function Login() {
   const auth = useSelector(authSelector);
-  const [login, { isLoading, data, error }] =
-    useLoginMutation();
+  const [login, { isLoading, data, error }] = useLoginMutation();
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({ mode: "onSubmit" });
+  } = useForm({
+    mode: "onSubmit",
+    resolver: yupResolver(LoginValidationSchema),
+  });
   const dispatch = useDispatch();
   useEffect(() => {
     if (error) {
@@ -45,28 +49,20 @@ function Login() {
         <input
           id="email"
           placeholder="Email"
-          {...register("email", {
-            maxLength: 100,
-            required: true,
-          })}
+          {...register("email")}
           type={"email"}
         />
-        {errors.email && <Error msg="email required" />}
+        {errors.email && <Error msg={errors.email.message as string} />}
         <input
           id="password"
           placeholder="Password"
           type={"password"}
-          {...register("password", {
-            minLength: 3,
-            required: true,
-          })}
+          {...register("password")}
         />
         {errors.password && (
           <Error
             msg={
-              errors.password.type == "minLength"
-                ? "Password must be 3 characters or longer"
-                : "Password requried"
+              errors.password.message as string
             }
           />
         )}

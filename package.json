@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.11",
     "@reduxjs/toolkit": "^1.9.1",
     "async-mutex": "^0.4.0",
     "framer-motion": "^10.2.5",
@@ -20,13 +21,14 @@
     "i18next-http-backend": "^2.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.43.5",
+    "react-hook-form": "^7.43.7",
     "react-i18next": "^12.2.0",
     "react-icons": "^4.7.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
     "ts-luxon": "^4.2.2",
-    "vite-plugin-svgr": "^2.4.0"
+    "vite-plugin-svgr": "^2.4.0",
+    "yup": "^1.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authSelector } from "../features/auth/auth.slice";
@@ -13,7 +13,7 @@ interface Props{
 const ProtectedRoute = memo<Props>((props: Props) => {
   const auth = useSelector(authSelector);
   const navigate = useNavigate();
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!auth.user && props.case == "loggedOut") {
       navigate(props.turnPath, { replace: true });
     } else if (auth.user && props.case == "loggedIn") {

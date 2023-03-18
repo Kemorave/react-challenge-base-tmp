@@ -1,5 +1,4 @@
-
-export function Error(props: { msg: string }) {
+export function Error(props: { msg?: string | null | undefined }) {
   return (
     <span role="alert" className="text-xs dark:text-red-500 text-red-700">
       {props.msg}

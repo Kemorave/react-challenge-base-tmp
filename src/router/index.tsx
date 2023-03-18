@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import App from "../App";
 import { Constants } from "../app/config/constants";
-import ProtectedRoute from "../components/ProtectedRoute";
+import ProtectedRoute from "../containers/ProtectedRoute";
 import Login from "../features/auth/login";
 import Register from "../features/auth/register";
 import Home from "../features/home/home";
