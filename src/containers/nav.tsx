@@ -1,6 +1,6 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { User } from "../types/user";
-import ThemeToggle from "./themeToggle";
+import ThemeToggle from "../components/themeToggle";
 import { NavLink } from "react-router-dom";
 import { Constants } from "../app/config/constants";
 

@@ -1,11 +1,9 @@
-import React, { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelector, logOut } from "../auth/auth.slice";
 import {
     AiFillBank,
   AiFillProfile,
   AiOutlineMail,
-  AiOutlineProfile,
   AiOutlineUser,
 } from "react-icons/ai";
 

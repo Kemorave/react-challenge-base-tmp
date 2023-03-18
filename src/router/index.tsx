@@ -1,25 +1,16 @@
-import { Root } from "postcss";
-import { Suspense, useState } from "react";
-import { Trans } from "react-i18next";
-import { Provider } from "react-redux";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  useOutlet,
 } from "react-router-dom";
 import App from "../App";
 import { Constants } from "../app/config/constants";
-import { store } from "../app/store";
 import ProtectedRoute from "../components/ProtectedRoute";
-import SplashScreen from "../components/splashScreen";
-import ThemeToggle from "../containers/themeToggle";
 import Login from "../features/auth/login";
 import Register from "../features/auth/register";
 import Home from "../features/home/home";
 import ProfilePage from "../features/profile/profilePage";
 import NotFoundPage from "../pages/notFoundPage";
-import { JWTData } from "../types/auth";
 import { User } from "../types/user";
 
 export function getRouter(user: User | null) {

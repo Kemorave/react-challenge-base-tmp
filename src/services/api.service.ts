@@ -91,7 +91,7 @@ export const mainApi = createApi({
   }),
 });
 function loginToFormData(lr:LoginRequest){
-var fd= new FormData();
+const fd= new FormData();
 fd.append('Email',lr.email);
 fd.append('Password',lr.password);
 return fd;

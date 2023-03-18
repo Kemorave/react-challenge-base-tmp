@@ -1,9 +1,7 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import React, { useEffect } from "react";
-import { FieldValues, useForm, useFormContext } from "react-hook-form";
+import { useEffect } from "react";
+import { FieldValues, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Constants } from "../../app/config/constants";
-import Spinner from "../../components/spinner";
 import SpinnerButton from "../../components/spinnerButton";
 import { useLoginMutation } from "../../services/api.service";
 import { AuthResult } from "../../types/auth";
@@ -11,7 +9,7 @@ import { authSelector, logIn } from "./auth.slice";
 import { Error } from "../../components/Error";
 function Login() {
   const auth = useSelector(authSelector);
-  const [login, { isLoading, data, error, isError, isSuccess }] =
+  const [login, { isLoading, data, error }] =
     useLoginMutation();
   const {
     handleSubmit,
@@ -25,7 +23,7 @@ function Login() {
     } else if (data) {
       dispatch(logIn(data as AuthResult));
     }
-  }, [error, data]);
+  }, [error, data, dispatch]);
   const onSubmit = (e: FieldValues) => {
     console.log(e);
     login({ email: e["email"], password: e["password"] });

@@ -1,4 +1,3 @@
-import React from "react";
 import { AiOutlineQuestion } from "react-icons/ai";
 const NotFoundPage = () => {
   return (

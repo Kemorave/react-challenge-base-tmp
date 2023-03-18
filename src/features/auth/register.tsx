@@ -1,14 +1,11 @@
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import React, { useEffect } from "react";
-import { FieldValues, useForm, useFormContext } from "react-hook-form";
+import { useEffect } from "react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query"; 
+import { FieldValues, useForm } from "react-hook-form";
 import { FaSmileWink } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Constants } from "../../app/config/constants";
 import { Error } from "../../components/Error";
-import Spinner from "../../components/spinner";
 import SpinnerButton from "../../components/spinnerButton";
 import {
-  useLoginMutation,
   useRegisterMutation,
 } from "../../services/api.service";
 import { AuthResult } from "../../types/auth";
@@ -16,7 +13,7 @@ import { authSelector, logIn } from "./auth.slice";
 
 const Register = () => {
   const auth = useSelector(authSelector);
-  const [registerUser, { isLoading, data, error, isError, isSuccess }] =
+  const [registerUser, { isLoading, data, error }] =
     useRegisterMutation();
   const {
     handleSubmit,
@@ -30,7 +27,7 @@ const Register = () => {
     } else if (data) {
       dispatch(logIn(data as AuthResult));
     }
-  }, [error, data]);
+  }, [error, data, dispatch]);
   const onSubmit = (e: FieldValues) => {
     console.log(e);
     registerUser({

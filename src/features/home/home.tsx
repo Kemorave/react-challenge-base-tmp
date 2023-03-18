@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
-import { Trans, useTranslation } from "react-i18next";
-import ThemeToggle from "../../containers/themeToggle";
+import { useContext } from "react";
+import { Trans } from "react-i18next";
+import ThemeToggle from "../../components/themeToggle";
 import { LanguageContext } from "../../context/language.context";
-import i18n from "../../locale/i18n";
 
 const Home = () => {
   const language = useContext(LanguageContext);
@@ -21,7 +20,7 @@ const Home = () => {
 
         <ThemeToggle />
         <div className=" self-center">
-          {language.supportedLanguages?.map((lng, i) => (
+          {language.supportedLanguages?.map((lng) => (
             <button
               key={lng.code}
               style={{

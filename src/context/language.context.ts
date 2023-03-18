@@ -12,7 +12,7 @@ export interface LanguageData {
   t: TFunction<"Translation", undefined, "Translation">;
   i18n: i18n;
 }
-let testinit: LanguageData = {
+const testinit: LanguageData = {
   i18n: i18next,
   t: t,
   changeLanguage: (a) => {

@@ -12,7 +12,7 @@ export interface AuthState {
   errorKey?: string | null;
 }
 
-let initState: AuthState = {
+const initState: AuthState = {
   tokenData: authService.getJWTData(),
 };
 const authSlice = createSlice({
@@ -25,8 +25,8 @@ const authSlice = createSlice({
       state.user = null;
     },
     logIn: (state, action: PayloadAction<AuthResult | FetchBaseQueryError>) => {
-      let authD = action.payload as AuthResult;
-      let error = action.payload as FetchBaseQueryError;
+      const authD = action.payload as AuthResult;
+      const error = action.payload as FetchBaseQueryError;
       if (typeof error?.status === "number") {
         state.errorKey = getErrorKey(error.status as number);
         return;
@@ -41,7 +41,7 @@ const authSlice = createSlice({
         state.errorKey = getErrorKey(authD.code);
         return;
       }
-      console.log(authD);;
+      console.log(authD);
       state.errorKey = null;
       state.user = authD.user;
       authService.saveJWTData({

@@ -1,9 +1,8 @@
-import React, { memo, useContext } from "react";
-import { Trans, useTranslation } from "react-i18next";
+import { memo, useContext } from "react";
+import { Trans } from "react-i18next";
 import { LanguageContext } from "../context/language.context";
-import { User } from "../types/user";
 
-const Footer = memo((prop: { user: User | null }) => {
+const Footer = memo(() => {
   const language = useContext(LanguageContext);
 
   //useTranslation();
@@ -11,7 +10,7 @@ const Footer = memo((prop: { user: User | null }) => {
     <div className="p-5 self-center flex items-center text-center">
       <Trans values={{ date: new Date() }} i18nKey="dateNow"></Trans>
       <p className="text-gray-700"> &nbsp;|&nbsp; </p>
-      {language.supportedLanguages?.map((lng, i) => (
+      {language.supportedLanguages?.map((lng) => (
         <a
           className="cursor-pointer mr-2"
           key={lng.code}

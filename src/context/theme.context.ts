@@ -11,7 +11,11 @@ export interface ThemeContextData {
 }
 const textInit: ThemeContextData = {
   theme: ThemeType.dark,
-  setTheme: () => {},
-  toggleTheme: () => {},
+  setTheme: function (): void {
+    throw new Error("Function not implemented.");
+  },
+  toggleTheme: function (): void {
+    throw new Error("Function not implemented.");
+  },
 };
 export const ThemeContext = createContext(textInit);

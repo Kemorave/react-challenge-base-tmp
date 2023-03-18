@@ -1,7 +1,6 @@
-import { AuthResult, JWTData } from "../types/auth";
+import { JWTData } from "../types/auth";
 
-class AuthService {
-  constructor() {}
+class AuthService { 
   private static _TOKEN_DATA_KEY = "scjsoa5";
 
   saveJWTData(token: JWTData) {
@@ -17,7 +16,7 @@ class AuthService {
   }
 
   getJWTData(): JWTData | null {
-    var json = localStorage.getItem(AuthService._TOKEN_DATA_KEY);
+    const json = localStorage.getItem(AuthService._TOKEN_DATA_KEY);
     if (!json) {
       return null;
     }

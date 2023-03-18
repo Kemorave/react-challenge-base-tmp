@@ -1,6 +1,5 @@
-import React, { Suspense, useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import "./index.css";
 import "./locale/i18n";
 import { store } from "./app/store";
@@ -37,7 +36,16 @@ function Index() {
     if (!(isLoading && isFetching) && !isError && auth.tokenData)
       loadUser(undefined, false);
     if (data) dispatch(updateUser(data));
-  }, [data, error]);
+  }, [
+    auth.tokenData,
+    data,
+    dispatch,
+    error,
+    isError,
+    isFetching,
+    isLoading,
+    loadUser,
+  ]);
 
   const token = auth.tokenData;
   const user = auth.user;

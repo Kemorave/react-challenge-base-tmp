@@ -10,7 +10,7 @@ i18n
   // https://github.com/i18next/i18next-http-backend
   .use(
     new Backend(null, {
-      loadPath: (lng, n) =>
+      loadPath: (lng) =>
         import.meta.env.VITE_BASE_URL +
         "\\locales\\" +
         lng +
@@ -33,7 +33,7 @@ i18n
   });
 
 // new usage
-i18n.services.formatter?.add("DATE_HUGE", (value, lng, options) => {
+i18n.services.formatter?.add("DATE_HUGE", (value, lng) => {
   return DateTime.fromJSDate(value)
     .setLocale(lng ?? "en")
     .toLocaleString(DateTime.DATE_HUGE);
