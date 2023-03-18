@@ -13,11 +13,11 @@ function AnimatedOutlet() {
 
   return outlet;
 }
-function App(props: { user: User | null }) {
+function App(props: { user: User | null; flowDirection: string }) {
   const location = useLocation();
   const [theme, setTheme] = useState(ThemeType.light);
   return (
-    <div className={`${theme}`}>
+    <div dir={props.flowDirection} className={`  ${theme} bg-div`}>
       <ThemeContext.Provider
         value={{
           theme: theme,
@@ -29,7 +29,7 @@ function App(props: { user: User | null }) {
           },
         }}
       >
-        <div className={`h-[100vh] flex flex-col ${theme}`}>
+        <div className={`h-[100vh] bg-div flex flex-col ${theme}`}>
           <Nav user={props.user} />
           <AnimatePresence mode="popLayout">
             <motion.main

@@ -1,25 +1,28 @@
-import { useEffect } from "react";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query"; 
+import { useContext, useEffect } from "react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { FieldValues, useForm } from "react-hook-form";
 import { FaSmileWink } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Error } from "../../components/Error";
 import SpinnerButton from "../../components/spinnerButton";
-import {
-  useRegisterMutation,
-} from "../../services/api.service";
+import { useRegisterMutation } from "../../services/api.service";
 import { AuthResult } from "../../types/auth";
 import { authSelector, logIn } from "./auth.slice";
-
+import { LanguageContext } from "../../context/language.context";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { RegisterValidationSchema } from "./validation";
 const Register = () => {
+  const language = useContext(LanguageContext);
   const auth = useSelector(authSelector);
-  const [registerUser, { isLoading, data, error }] =
-    useRegisterMutation();
+  const [registerUser, { isLoading, data, error }] = useRegisterMutation();
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({ mode: "onChange" });
+  } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(RegisterValidationSchema),
+  });
   const dispatch = useDispatch();
   useEffect(() => {
     if (error) {
@@ -52,59 +55,31 @@ const Register = () => {
         </h1>
         {auth.errorKey && <Error msg={auth.errorKey} />}
         <input
-          id="email"
-          placeholder="Email"
-          {...register("email", {
-            maxLength: 100,
-            required: true,
-          })}
-          type={"email"}
+          id="email" type={'email'}
+          placeholder={language.t("Email")}
+          {...register("email")}
         />
-        {errors.email && <Error msg="email required" />}
+        {errors.email && <Error msg={errors.email.message as string} />}
         <input
           id="password"
-          placeholder="Password"
+          placeholder={language.t("Password")}
           type={"password"}
-          {...register("password", {
-            minLength: 3,
-            required: true,
-          })}
+          {...register("password")}
         />
-        {errors.password && (
-          <Error
-            msg={
-              errors.password.type == "minLength"
-                ? "Password must be 3 characters or longer"
-                : "Password requried"
-            }
-          />
-        )}
+        {errors.password && <Error msg={errors.password.message as string} />}
         <input
           id="rePassword"
-          placeholder="repeat Password"
+          placeholder={language.t("RePassword")}
           type={"password"}
-          {...register("rePassword", {
-            required: true,
-            validate: (value, form) => {
-              console.log(value);
-              if (value != form["password"]) {
-                return "Not match";
-              }
-              return;
-            },
-          })}
+          {...register("rePassword")}
         />
         {errors.rePassword && (
-          <Error
-            msg={
-              ( errors.rePassword.message?.toString()) ?? "Required"
-            }
-          />
+          <Error msg={errors.rePassword.message as string} />
         )}
         <SpinnerButton
           type="submit"
           className="ml-0 mr-auto"
-          lable="Register"
+          lable={language.t("Register")}
           isBusy={isLoading}
         />
       </form>

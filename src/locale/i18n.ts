@@ -4,16 +4,13 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 import { DateTime } from "ts-luxon";
 import i18next from "i18next";
+import { localeService } from "../services/locale.service";
 
-if (!localStorage.getItem("i18nextLng")) {
-  localStorage.setItem("i18nextLng", "en");
-}
+localeService.init("en");
 
 i18next.on("languageChanged", (lng) => {
-  localStorage.setItem("i18nextLng", lng);
+  localeService.setSavedlng(lng);
 });
-
-const lng = localStorage.getItem("i18nextLng") ?? "en";
 
 i18n
   // i18next-http-backend
@@ -41,7 +38,7 @@ i18n
     interpolation: {
       escapeValue: false,
     },
-    lng,
+    lng: localeService.getSavedlng(),
   });
 
 // new usage

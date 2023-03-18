@@ -1,17 +1,8 @@
-import i18next, { i18n, t, TFunction } from "i18next";
+import i18next, { t } from "i18next";
 import { createContext } from "react";
+import { localeService } from "../services/locale.service";
+import { LanguageData } from "../types/language";
 
-export interface LanguageInfo {
-  nativeName: string;
-  code: string;
-}
-export interface LanguageData {
-  currentLanguage: string;
-  supportedLanguages?: LanguageInfo[];
-  changeLanguage: (lang: string) => Promise<void>;
-  t: TFunction<"Translation", undefined, "Translation">;
-  i18n: i18n;
-}
 const testinit: LanguageData = {
   i18n: i18next,
   t: t,
@@ -19,6 +10,6 @@ const testinit: LanguageData = {
     console.log(`language is set to ${a}`);
     return Promise.resolve();
   },
-  currentLanguage: "en",
+  currentLanguage: localeService.getSavedlng(),
 };
-export const LanguageContext = createContext(testinit);
+export const LanguageContext = createContext<LanguageData>(testinit);

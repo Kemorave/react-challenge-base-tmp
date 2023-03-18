@@ -9,7 +9,7 @@ export const LoginValidationSchema = yup.object().shape({
   password: yup
     .string()
     .required("PasswordRequired")
-    .min(8, "PasswordTooShort")
+    .min(3, "PasswordTooShort")
     .max(32, "PasswordTooLong"),
 });
 
@@ -22,9 +22,11 @@ export const RegisterValidationSchema = yup.object().shape({
   password: yup
     .string()
     .required("PasswordRequired")
-    .min(8, "PasswordTooShort")
+    .min(3, "PasswordTooShort")
     .max(32, "PasswordTooLong"),
-  rePassword: yup.string().test("PasswordMatch", "PMM", (value, res) => {
-    return value === res.parent.password;
-  }),
+  rePassword: yup
+    .string()
+    .test("PasswordMatch", "PasswordMismatch", (value, res) => {
+      return value === res.parent.password;
+    }),
 });

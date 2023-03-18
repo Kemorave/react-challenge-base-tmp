@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Trans } from "react-i18next";
-import ThemeToggle from "../../components/themeToggle";
+import ThemeToggle from "../../containers/themeToggle";
 import { LanguageContext } from "../../context/language.context";
 
 const Home = () => {
@@ -13,9 +13,9 @@ const Home = () => {
       flex rounded-lg p-10  flex-col"
       >
         <p className=" text-center">
-          <Trans i18nKey="welcome"></Trans>
+          <Trans className="uppercase" i18nKey="Welcome"></Trans>
           <br />
-          <Trans values={{ date: new Date() }} i18nKey="dateNow"></Trans>
+          <Trans values={{ date: new Date() }} i18nKey="DateNow"></Trans>
         </p>
 
         <ThemeToggle />

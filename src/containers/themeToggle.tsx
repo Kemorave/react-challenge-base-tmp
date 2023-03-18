@@ -1,8 +1,10 @@
 import { memo, useContext } from "react";
+import { LanguageContext } from "../context/language.context";
 import { ThemeContext, ThemeType } from "../context/theme.context";
 
 const ThemeToggle = memo(() => {
   const themeData = useContext(ThemeContext);
+  const language = useContext(LanguageContext);
   return (
     <button
       className="justify-self-center
@@ -16,7 +18,11 @@ const ThemeToggle = memo(() => {
         p-1"
       onClick={() => themeData.toggleTheme()}
     >
-     Make it {themeData.theme==ThemeType.dark?'light':'dark'}
+      {language.t(
+        themeData.theme != ThemeType.dark
+          ? "DarkTheme.Catch"
+          : "LightTheme.Catch"
+      )}
     </button>
   );
 });

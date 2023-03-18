@@ -6,7 +6,7 @@ const SplashScreen = () => {
          className="m-auto  animate-bounce
       flex rounded-lg p-10 bg-black"
        >
-         <h1 className="text-white">Loading darkness ...</h1>
+         <h1 className="text-white text-2xl">Kemorave temp</h1>
        </div>
      </div>
    );

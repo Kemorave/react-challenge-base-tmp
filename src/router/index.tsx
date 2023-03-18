@@ -13,10 +13,13 @@ import ProfilePage from "../features/profile/profilePage";
 import NotFoundPage from "../pages/notFoundPage";
 import { User } from "../types/user";
 
-export function getRouter(user: User | null) {
+export function getRouter(user: User | null, flowDirection: string) {
   return createBrowserRouter(
     createRoutesFromElements(
-      <Route path={Constants.home} element={<App user={user} />}>
+      <Route
+        path={Constants.home}
+        element={<App user={user} flowDirection={flowDirection} />}
+      >
         <Route index element={<Home />} />
         <Route
           path={Constants.login}

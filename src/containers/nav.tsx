@@ -1,15 +1,18 @@
-import { memo } from "react";
+import { memo, useContext } from "react";
 import { User } from "../types/user";
-import ThemeToggle from "../components/themeToggle";
+import ThemeToggle from "./themeToggle";
 import { NavLink } from "react-router-dom";
 import { Constants } from "../app/config/constants";
+import { LanguageContext } from "../context/language.context";
 
 const Nav = memo((props: { user: User | null }) => {
+  const language = useContext(LanguageContext);
+  
   return (
-    <div className="flex shadow-md z-30 dark:shadow-inner p-5 dark:shadow-white items-center justify-between">
+    <div className="flex shadow-md  z-30 dark:shadow-inner p-5 dark:shadow-white items-center justify-between">
       <NavLink to={Constants.home}>
         <h1 className="text-center my-3 uppercase    font-bold ">
-          env ==={" "}
+          {language.t("Env")} ==={" "}
           <span className="animate-pulse">
             {import.meta.env.VITE_APP_TITLE}
           </span>
@@ -33,7 +36,7 @@ const Nav = memo((props: { user: User | null }) => {
               }
               to={Constants.login}
             >
-              Login
+              {language.t("Login")}
             </NavLink>
             <NavLink
               className={(isActive) =>
@@ -41,7 +44,7 @@ const Nav = memo((props: { user: User | null }) => {
               }
               to={Constants.register}
             >
-              Register
+              {language.t("Register")}
             </NavLink>
           </div>
         )}

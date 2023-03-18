@@ -1,5 +1,5 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import SpinnerButton from "../../components/spinnerButton";
@@ -9,7 +9,9 @@ import { authSelector, logIn } from "./auth.slice";
 import { Error } from "../../components/Error";
 import { LoginValidationSchema } from "./validation";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { LanguageContext } from "../../context/language.context";
 function Login() {
+  const language = useContext(LanguageContext);
   const auth = useSelector(authSelector);
   const [login, { isLoading, data, error }] = useLoginMutation();
   const {
@@ -34,7 +36,7 @@ function Login() {
   };
 
   return (
-    <div className="h-full flex flex-col  items-center">
+    <div className="h-full flex flex-col bg-div items-center">
       <form
         className="flex transition-all duration-700 my-auto  md:min-w-[350px]   mx-10 gap-3 rounded-md flex-col p-5  border-[1px] border-b-4 border-l-4 border-gray-700 shadow-md "
         onSubmit={handleSubmit(onSubmit)}
@@ -48,29 +50,23 @@ function Login() {
         {auth.errorKey && <Error msg={auth.errorKey} />}
         <input
           id="email"
-          placeholder="Email"
+          placeholder={language.t("Email")}
           {...register("email")}
           type={"email"}
         />
         {errors.email && <Error msg={errors.email.message as string} />}
         <input
           id="password"
-          placeholder="Password"
+          placeholder={language.t("Password")}
           type={"password"}
           {...register("password")}
         />
-        {errors.password && (
-          <Error
-            msg={
-              errors.password.message as string
-            }
-          />
-        )}
+        {errors.password && <Error msg={errors.password.message as string} />}
 
         <SpinnerButton
           type="submit"
           className="ml-0 mr-auto"
-          lable="Login"
+          lable={language.t("Login")}
           isBusy={isLoading}
         />
       </form>

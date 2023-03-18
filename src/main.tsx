@@ -11,31 +11,32 @@ import { authSelector, logOut } from "./features/auth/auth.slice";
 import { useLazyGetCurrentUserQuery } from "./services/api.service";
 import { updateUser } from "./features/auth/auth.slice";
 import { useTranslation } from "react-i18next";
-import { LanguageContext, LanguageInfo } from "./context/language.context";
+import { LanguageContext } from "./context/language.context";
 import { isNetworkError } from "./util/fetchErrorUtil";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { AiFillAlert } from "react-icons/ai";
+import { LanguageInfo } from "./types/language";
 
 const supportedLanguages: LanguageInfo[] = [
   { nativeName: "English", code: "en" },
   { nativeName: "العربية", code: "ar" },
 ];
 function Index() {
-  const { t, i18n } = useTranslation();
-  const auth = useSelector(authSelector);
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
   const [loadUser, { data, isLoading, isError, error, isFetching }] =
     useLazyGetCurrentUserQuery();
+
+  const auth = useSelector(authSelector);
   useEffect(() => {
-    console.log(error);
-    console.log(auth.tokenData);
     if (isError && !isNetworkError(error as FetchBaseQueryError)) {
       dispatch(logOut());
       return;
-    }
-    if (!(isLoading && isFetching) && !isError && auth.tokenData)
+    } else if (!(isLoading && isFetching) && !isError && auth.tokenData) {
       loadUser(undefined, false);
-    if (data) dispatch(updateUser(data));
+    } else if (data) {
+      dispatch(updateUser(data));
+    }
   }, [
     auth.tokenData,
     data,
@@ -83,11 +84,11 @@ function Index() {
     );
   }
 
-  if ((!user && token) || isLoading || isFetching) {
+  if (!user && token && (isLoading || isFetching)) {
     return <SplashScreen />;
   }
 
-  const router = getRouter(user ?? null);
+  const router = getRouter(user ?? null, t("FlowDirection"));
   return (
     <LanguageContext.Provider
       value={{
@@ -104,7 +105,7 @@ function Index() {
     </LanguageContext.Provider>
   );
 }
-
+document.getElementsByTagName("body")[0]?.classList?.add("bg-div");
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Provider store={store}>
     <Suspense fallback={<SplashScreen />}>
