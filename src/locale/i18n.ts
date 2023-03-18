@@ -3,6 +3,17 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
 import { DateTime } from "ts-luxon";
+import i18next from "i18next";
+
+if (!localStorage.getItem("i18nextLng")) {
+  localStorage.setItem("i18nextLng", "en");
+}
+
+i18next.on("languageChanged", (lng) => {
+  localStorage.setItem("i18nextLng", lng);
+});
+
+const lng = localStorage.getItem("i18nextLng") ?? "en";
 
 i18n
   // i18next-http-backend
@@ -30,6 +41,7 @@ i18n
     interpolation: {
       escapeValue: false,
     },
+    lng,
   });
 
 // new usage

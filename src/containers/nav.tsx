@@ -6,7 +6,7 @@ import { Constants } from "../app/config/constants";
 
 const Nav = memo((props: { user: User | null }) => {
   return (
-    <div className="flex shadow-md z-30 dark:shadow-white px-5 items-center justify-between">
+    <div className="flex shadow-md z-30 dark:shadow-inner p-5 dark:shadow-white items-center justify-between">
       <NavLink to={Constants.home}>
         <h1 className="text-center my-3 uppercase    font-bold ">
           env ==={" "}

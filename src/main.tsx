@@ -49,6 +49,7 @@ function Index() {
 
   const token = auth.tokenData;
   const user = auth.user;
+
   if (isError) {
     return (
       <div className="h-[100vh] w-full flex">
@@ -81,6 +82,7 @@ function Index() {
       </div>
     );
   }
+
   if ((!user && token) || isLoading || isFetching) {
     return <SplashScreen />;
   }
